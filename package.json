@@ -1,0 +1,27 @@
+{
+  "name": "UberDriverSupport",
+  "version": "0.0.0",
+  "description": "Driver Support App for Uber",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": ""
+  },
+  "author": "Taariq Isaacs",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "bluebird": "~2.9.34",
+    "body-parser": "~1.12.4",
+    "express": "~4.12.4",
+    "express-handlebars": "~2.0.1",
+    "express-myconnection": "~1.0.4",
+    "express-session": "~1.11.2",
+    "mysql": "~2.7.0",
+    "qunit": "~0.7.6",
+    "should": "~7.0.2"
+  },
+  "devDependencies": {
+    "qunit": "~0.7.5"
+  }
+}

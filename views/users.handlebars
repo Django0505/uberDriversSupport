@@ -1,0 +1,47 @@
+{{#if admin}}
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <hr />
+        <div><h3 class = 'text-center'>USER LIST</h3></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <hr/>
+                <table class="table">
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                           
+                    </tr>
+                        {{#users}}
+                        <tr>
+                                <td>{{username}}</td>
+                                <td>{{role}}</td>
+                                
+                                    <form action="/updateUserRole/{{username}}" method="post">
+                                        <td>
+
+                                           <select name="role">
+                                                <option value = "admin">admin</option>
+                                                <option value = "readOnly">read only</option>
+                                           </select>
+                                            
+                                       </td>
+                                       <td> <button type = "submit">Update Role</button>
+                                       </td>
+                                   </form>
+                                    <form action="/users/deleteUser/{{username}}" method="post">
+                                       <td> <button type = "submit">Delete</button>
+                                       </td>
+                                   </form>
+                                                                
+                        </tr>
+                        {{/users}}
+                    
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{{/if}}
