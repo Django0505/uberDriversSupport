@@ -33,6 +33,7 @@ app.use(myConnectionProvider.setupProvider);
 
 app.use(myConnection(mysql, dbOptions, 'pool'));
 
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
