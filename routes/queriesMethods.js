@@ -1,4 +1,4 @@
-module.exports = function(){
+module.exports = function(io){
     this.showQueries = function (req, res, next) {
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
@@ -42,6 +42,10 @@ module.exports = function(){
 
         queriesDataServ.insertQuery([driver_id, query], function(err, rows){
           if(err)	throw err;
+          //io.emit("query_added", rows.insertId);
+          queriesDataServ.getQueryById(rows.insertId, function(err, results){
+            io.emit("query_added", results[0]);
+          })
           res.redirect('/queries');
         });
     });

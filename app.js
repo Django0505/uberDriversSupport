@@ -4,16 +4,18 @@ var express = require('express'),
     mysql = require('mysql'),
     session = require('express-session'),
     myConnection = require('express-myconnection'),
-
+    app = express(),
+    http = require('http').Server(app),
+    io = require('socket.io')(http),
     ConnectionProvider = require('./routes/connectionProvider'),
     UserDataService = require('./dataServices/userDataService'),
     UserMethods = require('./routes/userMethods'),
     AgentDataService = require('./dataServices/agentDataService'),
     AgentMethods = require('./routes/agentMethods'),
-    queriesMethods = require('./routes/queriesMethods'),
+    QueriesMethods = require('./routes/queriesMethods'),
     queriesDataService = require('./dataServices/queriesDataService');
 
-var app = express();
+//var ;
 
 var dbOptions = {
       host: 'localhost',
@@ -44,6 +46,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({secret: "shithead", cookie: {maxAge: 1000000}, resave:true, saveUninitialized: false}));
 
+io.on('query_added', function (data) {
+    console.log(data);
+});
+
 var userMethods = new UserMethods();
 app.get('/', userMethods.login);
 app.get('/', userMethods.loggedIn);
@@ -66,7 +72,7 @@ app.get('/users',userMethods.adminCheck, userMethods.showUsers);
 app.post('/updateUserRole/:username',userMethods.adminCheck, userMethods.updateUserRole);
 app.post('/users/deleteUser/:username',userMethods.adminCheck, userMethods.deleteUser);
 
-var queriesMethods = new queriesMethods();
+var queriesMethods = new QueriesMethods(io);
 app.get('/queries',userMethods.middleCheck, queriesMethods.showQueries);
 app.get('/queries/new',userMethods.middleCheck, queriesMethods.showAddQuery);
 app.get('/queries/view/:query_id',userMethods.middleCheck, queriesMethods.showQuery);
@@ -78,9 +84,9 @@ app.post('/queries/add',userMethods.middleCheck, queriesMethods.addQuery);
 app.get('/queries/delCat/:cat_id',userMethods.adminCheck, queriesMethods.delCat);
 app.post('/queries/updateCat/:cat_id',userMethods.adminCheck, queriesMethods.updateCat);
 
-var port = process.env.PORT || 3000;
+var portNr = process.env.SHAKTI_PORT || 3000;
 
-var server = app.listen(port, function () {
+var server = http.listen(portNr, function () {
 
   var host = server.address().address;
   var port = server.address().port;
