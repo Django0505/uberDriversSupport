@@ -15,7 +15,8 @@ module.exports = function(){
                 if(err)	throw err;
                   res.render( 'agentQueries', {
                       queries : rows,
-                      user: req.session.user
+                      user: req.session.user,
+                      role : "Agent"
                   });
               });
           });
@@ -36,7 +37,9 @@ module.exports = function(){
                 if(err)	throw err;
                   res.render( 'agentQueries', {
                       queries : rows,
-                      user: req.session.user
+                      user: req.session.user,
+                      role : "Agent"
+
                   });
               });
           });
@@ -197,7 +200,9 @@ module.exports = function(){
                                 if(err)	throw err;
                                   res.render( 'agentQueries', {
                                       queries : rows,
-                                      user: req.session.user
+                                      user: req.session.user,
+                                      role : "Agent"
+
                                   });
                               });
                           });

@@ -15,7 +15,9 @@ module.exports = function(){
                 if(err)	throw err;
                   res.render( 'queries', {
                       queries : rows,
-                      user: req.session.user
+                      user: req.session.user,
+                      role : "Driver"
+
                   });
               });
           });
@@ -36,7 +38,8 @@ module.exports = function(){
                 if(err)	throw err;
                   res.render( 'queries', {
                       queries : rows,
-                      user: req.session.user
+                      user: req.session.user,
+                      role : "Driver"
                   });
               });
           });
@@ -199,7 +202,8 @@ module.exports = function(){
                                 if(err)	throw err;
                                   res.render( 'queries', {
                                       queries : rows,
-                                      user: req.session.user
+                                      user: req.session.user,
+                                      role : "Driver"
                                   });
                               });
                           });

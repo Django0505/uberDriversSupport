@@ -6,8 +6,7 @@ module.exports = function(){
           if(err)	throw err;
             res.render( 'queries', {
                 queries : rows,
-                user: req.session.user,
-                role : "Driver"
+                user: req.session.user
             });
         });
     });
@@ -26,8 +25,7 @@ module.exports = function(){
           if(err)	throw err;
             res.render( 'query', {
                 queries : rows,
-                user: req.session.user,
-                role : "Driver"
+                user: req.session.user
             });
         });
     });
