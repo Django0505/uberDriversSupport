@@ -1,0 +1,45 @@
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <hr />
+        <div><h3 class = 'text-center'>CATEGORY LIST</h3></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                {{#if admin}}
+                    <div class = "editButton2"><a href = "/category/add"><span class="fa fa-plus"></span></a></div>
+                {{/if}}    
+                <hr/>
+                <form>
+                    <input class = "searchBar"id = "categorySearchBar" type = "text" name = "categories"></input>
+                </form>
+                <table class="table" id = "categoryList">
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        {{#if admin}}
+                            <th>Edit/Delete</th>
+                        {{/if}}    
+                    </tr>
+                    {{#if admin}}
+                        {{#category}}
+                        <tr>
+                                <td>{{cat_id}}</td>
+                                <td>{{cat_name}}</td>
+                                <td><div class = "editButtons"><a href = "/category/getCat/{{cat_id}}"> <span class="fa fa-edit"></span> </a><a onclick = 'alert("Cannot delete categories linked to products!")' href = '/category/delCat/{{cat_id}}'><span class="fa fa-trash-o"></span> </a></div></td>
+                        </tr>
+                        {{/category}}
+                    {{else}}
+                        {{#category}}
+                        <tr>
+                                <td>{{cat_id}}</td>
+                                <td>{{cat_name}}</td>
+                        </tr>
+                        {{/category}}    
+                    {{/if}}
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
