@@ -16,7 +16,7 @@ module.exports = function (connection) {
   };
 
   this.getQuery = function (data, cb) {
-      insertData('SELECT query_id, query, agent.username, status FROM query, agent, driver WHERE driver.user_id = query.driver_id AND query.agent_id = agent.agent_id AND query.query_id = ?', data, cb );
+      insertData('SELECT query_id, query, agent.username FROM query, agent, driver WHERE driver.user_id = query.driver_id AND query.query_id = ?', data, cb );
   };
 
   this.insertQuery = function (data, cb) {
