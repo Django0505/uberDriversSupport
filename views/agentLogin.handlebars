@@ -1,23 +1,21 @@
 <div id="page-wrapper" >
   <p class = "text-center">{{msg}}</p>
+  <h3 class = "text-center">Agent Login</h3>
+
   <div class="form">
-          <form action="/login" method="post">
+          <form action="/agent/login" method="post">
             <input name="user" type="text" placeholder="Username" required="">
             <input name="pass" type="password" placeholder="Password" required="">
             <div class="check">
               <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i class="left"> </i>Remember My Password</label>
             </div>
-            <input type="submit" value="Sign In">
+            <input type="submit" value="Sign In Agent">
           </form>
-          <form class="text-center"  action="/signUp" method="get">
-              <input type="submit" value="Register">
+          <form class="text-center"  action="/agent/signUp" method="get">
+              <input type="submit" value="Register Agent">
           </form>
 
           <a href="#">Forgot your password?</a>
-
-          <form class="text-center"  action="/agent/login" method="get">
-              <input type="submit" value="Agent Login">
-          </form>
 
   </div>
 </div>

@@ -7,17 +7,20 @@ module.exports = function (connection) {
   var insertData = function(query, data, cb){
       connection.query(query, data, cb);
   };
+  this.getQueries = function (data, cb) {
+      getData('SELECT query_id, driver.username, query FROM query, driver WHERE driver.user_id = query.driver_id', cb );
+  };
 
   this.getAllQueries = function (data, cb) {
-      insertData('SELECT query_id, query, agent.username, status FROM query, agent, driver WHERE driver.user_id = query.driver_id AND query.agent_id = agent.agent_id AND driver.user_id = ?', data, cb );
+      insertData('SELECT query_id, query FROM query, driver WHERE driver.user_id = query.driver_id AND driver.user_id = ?', data, cb );
   };
 
   this.getQuery = function (data, cb) {
       insertData('SELECT query_id, query, agent.username, status FROM query, agent, driver WHERE driver.user_id = query.driver_id AND query.agent_id = agent.agent_id AND query.query_id = ?', data, cb );
   };
 
-  this.insertCategory = function (data, cb) {
-      insertData('INSERT INTO category SET ?', data, cb );
+  this.insertQuery = function (data, cb) {
+      insertData('INSERT INTO query (driver_id, query) VALUES (?, ?)', data, cb );
   };
 
   this.getUpdatedCategory = function (data, cb) {

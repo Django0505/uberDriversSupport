@@ -1,0 +1,18 @@
+<!--This is the handlebars page for the home page with information about nelisa and her shop-->
+<div id="page-wrapper" >
+  <ul class="nav nav-tabs">
+    <li role="presentation"><a href="/queries/new">New</a></li>
+    <li role="presentation"><a href="/queries/clear">Clear</a></li>
+  </ul>
+
+  <div class="list-group">
+    {{#queries}}
+    <a href="/queries/view/{{this.query_id}}" class="queryBox list-group-item">
+      <strong>Driver: </strong>{{this.username}}
+    </br>
+      <strong>Query: </strong>{{this.query}}
+      <span class="badge">{{this.status}}</span>
+    </a>
+    {{/queries}}
+  </div>
+</div>

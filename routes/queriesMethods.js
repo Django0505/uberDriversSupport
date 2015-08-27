@@ -30,25 +30,18 @@ module.exports = function(){
         });
     });
     };
-    this.addCat = function (req, res, next) {
+    this.addQuery = function (req, res, next) {
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
         var input = JSON.parse(JSON.stringify(req.body));
-        var data = {
-            cat_name : input.cat_name
-        };
 
-        if(data.cat_name.trim() === "" ){
-            res.render( 'addqueries', {
-                error : "queries cannot be blank"
-            });
-        }
-        else{
-          queriesDataServ.insertqueries(data, function(err, rows){
-            if(err)	throw err;
-            res.redirect('/queries');
-          });
-        }
+        var driver_id = req.session.user.id;
+        var query = input.query[0];
+
+        queriesDataServ.insertQuery([driver_id, query], function(err, rows){
+          if(err)	throw err;
+          res.redirect('/queries');
+        });
     });
   };
 
@@ -57,7 +50,7 @@ module.exports = function(){
     		var queriesDataServ = services.queriesDataServ;
         var cat_id = req.params.cat_id;
         var data = [cat_id];
-        queriesDataServ.getUpdatequeries(data, function(err, results) {
+        queriesDataServ.getUpdatequeries([data], function(err, results) {
             if (err) return next(err);
             res.render( 'updateCat', {
                 queries : results,

@@ -8,8 +8,10 @@ var express = require('express'),
     ConnectionProvider = require('./routes/connectionProvider'),
     UserDataService = require('./dataServices/userDataService'),
     UserMethods = require('./routes/userMethods'),
+    AgentDataService = require('./dataServices/agentDataService'),
+    AgentMethods = require('./routes/agentMethods'),
     queriesMethods = require('./routes/queriesMethods'),
-    queriesDataService = require('./dataServices/queriesDataService')
+    queriesDataService = require('./dataServices/queriesDataService');
 
 var app = express();
 
@@ -24,7 +26,8 @@ var dbOptions = {
 var serviceSetupCallback = function(connection){
 	return {
 		    queriesDataServ : new queriesDataService(connection),
-    		userDataService : new UserDataService(connection)
+    		userDataService : new UserDataService(connection),
+        agentDataService : new AgentDataService(connection)
 	}
 };
 
@@ -32,7 +35,6 @@ var myConnectionProvider = new ConnectionProvider(dbOptions, serviceSetupCallbac
 app.use(myConnectionProvider.setupProvider);
 
 app.use(myConnection(mysql, dbOptions, 'pool'));
-
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -50,6 +52,13 @@ app.post('/signUp', userMethods.addUser);
 app.post('/login', userMethods.checkUser);
 app.get('/logout', userMethods.logout);
 
+var agentMethods = new AgentMethods();
+app.get('/agent/login', agentMethods.login);
+app.post('/agent/login', agentMethods.checkUser);
+app.get('/agent/signUp', agentMethods.signUp);
+app.post('/agent/signUp', agentMethods.addUser);
+app.get('/agent/home', agentMethods.loggedIn);
+app.get('/agent/logout', agentMethods.logout);
 //middleware user check
 app.use(userMethods.middleCheck);
 
@@ -64,8 +73,8 @@ app.get('/queries/view/:query_id',userMethods.middleCheck, queriesMethods.showQu
 
 app.get('/queries/search/:searchValue',userMethods.middleCheck, queriesMethods.getSearchqueries);
 app.get('/queries/profit',userMethods.middleCheck, queriesMethods.showCatProfit);
-app.get('/queries/add',userMethods.adminCheck, queriesMethods.showAddQuery);
-app.post('/queries/add',userMethods.adminCheck, queriesMethods.addCat);
+app.get('/queries/add',userMethods.middleCheck, queriesMethods.showAddQuery);
+app.post('/queries/add',userMethods.middleCheck, queriesMethods.addQuery);
 app.get('/queries/delCat/:cat_id',userMethods.adminCheck, queriesMethods.delCat);
 app.post('/queries/updateCat/:cat_id',userMethods.adminCheck, queriesMethods.updateCat);
 
