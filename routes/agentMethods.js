@@ -7,15 +7,15 @@ module.exports = function(){
 
     //log user in or redirect
     this.login = function (req, res){
-        if(req.session.user ){
-            user.username = req.session.user;
+        if(req.session.agent ){
+            user.username = req.session.agent;
             req.services(function(err, services){
           		var queriesDataServ = services.queriesDataServ;
               queriesDataServ.getQueries(function(err, rows){
                 if(err)	throw err;
                   res.render( 'agentQueries', {
                       queries : rows,
-                      user: req.session.user,
+                      user: req.session.agent,
                       role : "Agent"
                   });
               });
@@ -29,15 +29,15 @@ module.exports = function(){
 
     //render error msg if info entered incorrectly
     this.loggedIn = function (req, res) {
-        if(req.session.user ){
-            user.username = req.session.user;
+        if(req.session.agent ){
+            user.username = req.session.agent;
             req.services(function(err, services){
           		var queriesDataServ = services.queriesDataServ;
-              queriesDataServ.getQueries(req.session.user.id, function(err, rows){
+              queriesDataServ.getQueries(req.session.agent.id, function(err, rows){
                 if(err)	throw err;
                   res.render( 'agentQueries', {
                       queries : rows,
-                      user: req.session.user,
+                      user: req.session.agent,
                       role : "Agent"
 
                   });
@@ -69,7 +69,7 @@ module.exports = function(){
     //logout function
     this.logout = function (req, res){
         var msg = "You have logged out";
-        delete req.session.user;
+        delete req.session.agent;
         res.render('agentLogin',{
                     msg : msg
         });
@@ -77,7 +77,7 @@ module.exports = function(){
 
     //proceed to the next middleware component
     this.middleCheck = function(req, res, next){
-      if(req.session.user){
+      if(req.session.agent){
           next();
       }
       else{
@@ -87,7 +87,7 @@ module.exports = function(){
     };
 
     this.adminCheck = function(req, res, next){
-      if(req.session.user.role === "admin"){
+      if(req.session.agent.role === "admin"){
           next();
       }
       else{
@@ -192,15 +192,15 @@ module.exports = function(){
                         if(pass == true){
                             count = 0;
 
-                            req.session.user = {username: data.username,
+                            req.session.agent = {username: data.username,
                                                 id : results[0].user_id};
                             req.services(function(err, services){
                           		var queriesDataServ = services.queriesDataServ;
-                              queriesDataServ.getQueries(req.session.user.id, function(err, rows){
+                              queriesDataServ.getQueries(req.session.agent.id, function(err, rows){
                                 if(err)	throw err;
                                   res.render( 'agentQueries', {
                                       queries : rows,
-                                      user: req.session.user,
+                                      user: req.session.agent,
                                       role : "Agent"
 
                                   });
@@ -226,7 +226,7 @@ module.exports = function(){
                 if (err) return next(err);
                 res.render( 'users', {
                     users : results,
-                    user: req.session.user
+                    user: req.session.agent
                 });
             });
     });

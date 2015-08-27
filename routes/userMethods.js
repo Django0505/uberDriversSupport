@@ -11,7 +11,7 @@ module.exports = function(){
             user.username = req.session.user;
             req.services(function(err, services){
           		var queriesDataServ = services.queriesDataServ;
-              queriesDataServ.getAllQueries(req.session.user.id, function(err, rows){
+              queriesDataServ.getDriverQueries(req.session.user.id, function(err, rows){
                 if(err)	throw err;
                   res.render( 'queries', {
                       queries : rows,
@@ -34,7 +34,7 @@ module.exports = function(){
             user.username = req.session.user;
             req.services(function(err, services){
           		var queriesDataServ = services.queriesDataServ;
-              queriesDataServ.getAllQueries(req.session.user.id, function(err, rows){
+              queriesDataServ.getDriverQueries(req.session.user.id, function(err, rows){
                 if(err)	throw err;
                   res.render( 'queries', {
                       queries : rows,
@@ -193,12 +193,12 @@ module.exports = function(){
                     bcrypt.compare(data.password, user.password, function(err, pass){
                         if(pass == true){
                             count = 0;
-
+                            //console.log(results);
                             req.session.user = {username: data.username,
                                                 id : results[0].user_id};
                             req.services(function(err, services){
                           		var queriesDataServ = services.queriesDataServ;
-                              queriesDataServ.getAllQueries(req.session.user.id, function(err, rows){
+                              queriesDataServ.getDriverQueries(req.session.user.id, function(err, rows){
                                 if(err)	throw err;
                                   res.render( 'queries', {
                                       queries : rows,

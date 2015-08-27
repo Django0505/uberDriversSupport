@@ -2,7 +2,7 @@ module.exports = function(io){
     this.showQueries = function (req, res, next) {
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
-        queriesDataServ.getAllQueries(req.session.user.id, function(err, rows){
+        queriesDataServ.getDriverQueries(req.session.user.id, function(err, rows){
           if(err)	throw err;
             res.render( 'queries', {
                 queries : rows,
@@ -22,7 +22,7 @@ module.exports = function(io){
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
         var query_id = req.params.query_id;
-        queriesDataServ.getAllQueries(query_id, function(err, rows){
+        queriesDataServ.getDriverQueries(query_id, function(err, rows){
           if(err)	throw err;
             res.render( 'query', {
                 queries : rows,
@@ -36,14 +36,13 @@ module.exports = function(io){
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
         var input = JSON.parse(JSON.stringify(req.body));
-
-        var driver_id = req.session.user.id;
         var query = input.query[0];
+        var driver_id = req.session.user.id;
 
         queriesDataServ.insertQuery([driver_id, query], function(err, rows){
           if(err)	throw err;
           //io.emit("query_added", rows.insertId);
-          queriesDataServ.getQueryById(rows.insertId, function(err, results){
+          queriesDataServ.getQueryByQueryId(rows.insertId, function(err, results){
             io.emit("query_added", results[0]);
           })
           res.redirect('/queries');
