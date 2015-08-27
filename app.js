@@ -15,6 +15,11 @@ var express = require('express'),
 
 var app = express();
 
+//Setting socket.io
+var http = require('http').Server(app);
+var io = require('socket.io').listen(http);
+
+
 var dbOptions = {
       host: 'localhost',
       user: 'tarcode',
