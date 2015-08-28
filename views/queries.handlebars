@@ -7,8 +7,8 @@
 
   <div class="list-group">
     {{#queries}}
-    <a href="/queries/view/{{this.query_id}}" class="queryBox list-group-item">
-      <strong>Agent: </strong>{{this.username}}
+    <a href="/queries/view/{{this.query_id}}" class="queryBox{{this.query_id}} list-group-item">
+      <strong>Agent: <p class="agentName{{this.query_id}}"></p></strong>{{this.username}}
     </br>
       <strong>Query: </strong>{{this.query}}
       <span class="badge">{{this.status}}</span>
@@ -16,3 +16,25 @@
     {{/queries}}
   </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+
+  socket.on('query_accepted', function(evt){
+    //alert("go to agent : " + evt.agent );
+
+    $(".queryBox"+evt.query_id).css({
+                                       'background-color' : 'green',
+                                       'color' : '#fff'
+                                  });
+    $(".agentName"+evt.query_id).text(evt.agent);
+    if (username === evt.username){
+
+      //alert("go to agent : " + evt.agent );
+
+    }
+
+  });
+
+</script>

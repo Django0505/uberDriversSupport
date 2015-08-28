@@ -50,23 +50,24 @@ module.exports = function(io){
     });
   };
 
-    this.getUpdateCat = function (req, res, next) {
-      req.services(function(err, services){
-    		var queriesDataServ = services.queriesDataServ;
-        var cat_id = req.params.cat_id;
-        var data = [cat_id];
-        queriesDataServ.getUpdatequeries([data], function(err, results) {
-            if (err) return next(err);
-            res.render( 'updateCat', {
-                queries : results,
-                user: req.session.user,
-                admin:admin
-            });
-        });
-    });
-  };
+  this.acceptQuery = function (req, res, next) {
+    req.services(function(err, services){
 
-    this.updateCat = function (req, res, next) {
+      var queryId = req.params.id;
+
+      //get the agent id
+      var queriesDataServ = services.queriesDataServ;
+      queriesDataServ.getDriver(queryId, function(err, rows){
+        io.emit('query_accepted', {
+          query_id : queryId,
+          username : rows[0].username,
+          agent : req.session.agent.username });
+      });
+      res.redirect('/agent/home')
+  });
+};
+
+    this.updateQuery = function (req, res, next) {
       req.services(function(err, services){
     		var queriesDataServ = services.queriesDataServ;
         var cat_id = req.params.cat_id;
@@ -77,45 +78,6 @@ module.exports = function(io){
         queriesDataServ.updatequeries([data, cat_id], function(err, results) {
               if (err) return next(err);
               res.redirect('/queries');
-        });
-    });
-  };
-
-    this.delCat = function (req, res, next) {
-      req.services(function(err, services){
-    		var queriesDataServ = services.queriesDataServ;
-        var cat_id = req.params.cat_id;
-        queriesDataServ.deletequeries([cat_id], function(err, results) {
-              if (err) return next(err);
-              res.redirect('/queries');
-        });
-    });
-  };
-
-    this.showCatPopularity = function (req, res, next) {
-      req.services(function(err, services){
-    		var queriesDataServ = services.queriesDataServ;
-        queriesDataServ.popularqueries(function(err, results) {
-            if (err) return next(err);
-            res.render( 'catPopularity', {
-                catPopularity : results,
-                user: req.session.user,
-                admin:admin
-            });
-        });
-    });
-  };
-
-    this.showCatProfit = function (req, res, next) {
-      req.services(function(err, services){
-    		var queriesDataServ = services.queriesDataServ;
-        queriesDataServ.profitsPerqueries(function(err, results) {
-            if (err) return next(err);
-            res.render( 'catProfit', {
-                catProfit : results,
-                user: req.session.user,
-                admin:admin
-            });
         });
     });
   };

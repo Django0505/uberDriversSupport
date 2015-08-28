@@ -7,12 +7,33 @@
 
   <div class="list-group">
     {{#queries}}
-    <a href="/queries/view/{{this.query_id}}" class="queryBox list-group-item">
-      <strong>Driver: </strong>{{this.username}}
-    </br>
-      <strong>Query: </strong>{{this.query}}
-      <span class="badge">{{this.status}}</span>
+    <a href="/agent/accept/{{this.query_id}}"  class="queryBox{{this.query_id}} list-group-item">
+        <strong>Driver: </strong>{{this.username}}
+      </br>
+        <strong>Query: </strong>{{this.query}}
+        <span class="badge">{{this.status}}</span>
     </a>
     {{/queries}}
   </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+  socket.on('query_added', function(obj){
+      var query_id = obj.query_id;
+
+      //alert(query_id);
+
+      var query = "<a href='/agent/accept/" + query_id +"' class='queryBox" + query_id +" list-group-item'><strong>Driver: </strong>"+obj.username+"</br><strong>Query: </strong>"+obj.query+"</a>";
+
+      //alert(query);
+
+      $(".list-group").prepend(query);
+      $(".queryBox" + query_id).css({
+                                         'background-color' : 'red',
+                                         'color' : '#fff'
+                                    });
+  });
+
+</script>

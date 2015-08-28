@@ -49,7 +49,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(session({secret: "shithead", cookie: {maxAge: 1000000}, resave:true, saveUninitialized: false}));
+app.use(session({secret: "psyclone", cookie: {maxAge: 1000000}, resave:true, saveUninitialized: false}));
 
 io.on('query_added', function (data) {
     console.log(data);
@@ -81,13 +81,10 @@ var queriesMethods = new QueriesMethods(io);
 app.get('/queries',userMethods.middleCheck, queriesMethods.showQueries);
 app.get('/queries/new',userMethods.middleCheck, queriesMethods.showAddQuery);
 app.get('/queries/view/:query_id',userMethods.middleCheck, queriesMethods.showQuery);
+app.get('/agent/accept/:id', queriesMethods.acceptQuery);
 
-app.get('/queries/search/:searchValue',userMethods.middleCheck, queriesMethods.getSearchqueries);
-app.get('/queries/profit',userMethods.middleCheck, queriesMethods.showCatProfit);
 app.get('/queries/add',userMethods.middleCheck, queriesMethods.showAddQuery);
 app.post('/queries/add',userMethods.middleCheck, queriesMethods.addQuery);
-app.get('/queries/delCat/:cat_id',userMethods.adminCheck, queriesMethods.delCat);
-app.post('/queries/updateCat/:cat_id',userMethods.adminCheck, queriesMethods.updateCat);
 
 var portNr = process.env.SHAKTI_PORT || 3000;
 
@@ -96,6 +93,6 @@ var server = http.listen(portNr, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Nelisa app listening at http://%s:%s', host, port);
+  console.log('Uber Driver Support app listening at http://%s:%s', host, port);
 
 });

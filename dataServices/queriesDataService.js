@@ -10,10 +10,12 @@ module.exports = function (connection) {
   this.getQueries = function (data, cb) {
       getData('SELECT query_id, driver.username, query FROM query, driver WHERE driver.user_id = query.driver_id', cb );
   };
-
+  this.getDriver = function(data, cb){
+    insertData('SELECT driver.username FROM driver, query WHERE driver.user_id = query.driver_id AND query.query_id = ?', data, cb);
+  }
 
   this.getQueryByQueryId = function (data, cb) {
-      insertData('SELECT driver.username, query FROM query, driver WHERE driver.user_id = query.driver_id AND query_id = ?', [data], cb );
+      insertData('SELECT query_id, driver.username, query FROM query, driver WHERE driver.user_id = query.driver_id AND query_id = ?', [data], cb );
   };
 
   this.getDriverQueries = function (data, cb) {

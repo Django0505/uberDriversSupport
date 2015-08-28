@@ -33,7 +33,7 @@ module.exports = function(){
             user.username = req.session.agent;
             req.services(function(err, services){
           		var queriesDataServ = services.queriesDataServ;
-              queriesDataServ.getQueries(req.session.agent.id, function(err, rows){
+              queriesDataServ.getQueries(function(err, rows){
                 if(err)	throw err;
                   res.render( 'agentQueries', {
                       queries : rows,
@@ -44,12 +44,6 @@ module.exports = function(){
               });
           });
 
-        }
-        else if(lock == true){
-           msg = "Your account has been locked";
-            res.render('agentLogin', {
-              msg:msg
-            });
         }
         else{
           msg = "Incorrect username/password combination";
@@ -86,15 +80,6 @@ module.exports = function(){
 
     };
 
-    this.adminCheck = function(req, res, next){
-      if(req.session.agent.role === "admin"){
-          next();
-      }
-      else{
-          res.redirect("/");
-      }
-
-    };
 
     //add user function
     this.addUser = function (req, res, next) {
