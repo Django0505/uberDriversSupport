@@ -8,7 +8,7 @@
   <div class="list-group">
     {{#queries}}
     <a href="/queries/view/{{this.query_id}}" class="queryBox{{this.query_id}} list-group-item">
-      <strong>Agent: <p class="agentName{{this.query_id}}"></p></strong>{{this.username}}
+      <strong><h4>Agent: </h4><h5 class="agentName{{this.query_id}}"></h5></strong>{{this.username}}
     </br>
       <strong>Query: </strong>{{this.query}}
       <span class="badge">{{this.status}}</span>
@@ -29,6 +29,7 @@
                                        'color' : '#fff'
                                   });
     $(".agentName"+evt.query_id).text(evt.agent);
+    $(".badge").append("</br><a href='/agent/rate'>Rate Agent</a>")
     if (username === evt.username){
 
       //alert("go to agent : " + evt.agent );

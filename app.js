@@ -82,7 +82,7 @@ app.get('/queries',userMethods.middleCheck, queriesMethods.showQueries);
 app.get('/queries/new',userMethods.middleCheck, queriesMethods.showAddQuery);
 app.get('/queries/view/:query_id',userMethods.middleCheck, queriesMethods.showQuery);
 app.get('/agent/accept/:id', queriesMethods.acceptQuery);
-
+app.get('/agent/rate', agentMethods.rateAgent);
 app.get('/queries/add',userMethods.middleCheck, queriesMethods.showAddQuery);
 app.post('/queries/add',userMethods.middleCheck, queriesMethods.addQuery);
 

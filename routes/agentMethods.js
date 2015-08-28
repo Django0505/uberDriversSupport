@@ -60,6 +60,12 @@ module.exports = function(){
       res.render('agentSignUp');
     };
 
+    this.rateAgent = function (req, res){
+      res.render('rateAgent',{
+        agent : req.session.agent.username
+      });
+    };
+
     //logout function
     this.logout = function (req, res){
         var msg = "You have logged out";
