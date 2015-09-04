@@ -63,7 +63,15 @@ module.exports = function(io){
           username : rows[0].username,
           agent : req.session.agent.username });
       });
-      res.redirect('/agent/home')
+      queriesDataServ.getQueries(req.session.agent.id, function(err, rows){
+        if(err)	throw err;
+          res.render( 'agentQueries', {
+              queries : rows,
+              user: req.session.agent,
+              role : "Agent"
+
+          });
+      });
   });
 };
 

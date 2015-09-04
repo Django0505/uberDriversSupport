@@ -204,6 +204,14 @@ module.exports = function(){
                         }
                     });
                 }
+                else if (req.session.agent){
+                  res.render( 'agentQueries', {
+                      queries : rows,
+                      user: req.session.agent,
+                      role : "Agent"
+
+                  });
+                }
             });
 
     });

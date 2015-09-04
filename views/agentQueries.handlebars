@@ -26,7 +26,12 @@
       //alert(query_id);
 
       var query = "<a href='/agent/accept/" + query_id +"' class='queryBox" + query_id +" list-group-item'><strong>Driver: </strong>"+obj.username+"</br><strong>Query: </strong>"+obj.query+"</a>";
-
+      $(".queryBox" + query_id).click(function(){
+        $(".queryBox" + query_id).css({
+                                           'background-color' : 'green',
+                                           'color' : '#fff'
+                                      });
+      });
       //alert(query);
 
       $(".list-group").prepend(query);
