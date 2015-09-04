@@ -210,6 +210,14 @@ module.exports = function(){
                         }
                     });
                 }
+                else if (req.session.user){
+                  res.render( 'queries', {
+                      queries : rows,
+                      user: req.session.user,
+                      role : "Driver"
+
+                  });
+                }
             });
 
     });
