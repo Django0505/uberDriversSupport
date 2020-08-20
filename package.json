@@ -16,7 +16,7 @@
     "express-session": "~1.11.2",
     "mysql": "~2.7.0",
     "express-myconnection": "~1.0.4",
-    "bcrypt": "~0.8.3",
+    "bcrypt": "~5.0.0",
     "qunit": "~0.7.6",
     "should": "~7.0.2",
     "bluebird": "~2.9.34",
