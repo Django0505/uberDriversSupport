@@ -10,9 +10,9 @@
   "author": "Taariq Isaacs",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "~4.12.4",
+    "express": "~4.17.3",
     "express-handlebars": "~2.0.1",
-    "body-parser": "~1.12.4",
+    "body-parser": "~1.19.2",
     "express-session": "~1.11.2",
     "mysql": "~2.7.0",
     "express-myconnection": "~1.0.4",
